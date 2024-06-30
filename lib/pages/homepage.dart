@@ -17,6 +17,18 @@ class _HomePageState extends State<HomePage> {
  //reference the hive box
  final _myBox = Hive.openBox('mybox');
  ToDoDataBase db = ToDoDataBase();
+
+ void initState() {
+    // if this is the 1st time ever openin the app, then create default data
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      // there already exists data
+      db.loadData();
+    }
+
+    super.initState();
+  }
   //text controller
   final _controller = TextEditingController();
 
@@ -55,6 +67,9 @@ void deleteTask(int index){
   setState(() {
     db.toDoList.removeAt(index);
   });
+  db.updateDataBase();
+  }
+
 }
 
   @override

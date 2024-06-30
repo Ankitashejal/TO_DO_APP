@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myfirstapp/util/dialog_box.dart';
 import '../util/todo_tile.dart'; 
+import '../util/dialog_box.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -50,6 +52,12 @@ showDialog(
   }
 );
 }
+//delete
+void deleteTask(int index){
+  setState(() {
+    toDoList.removeAt(index);
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +78,10 @@ showDialog(
         itemCount: toDoList.length,
         itemBuilder: (BuildContext context, int index) { 
           return ToDoTile(
-            taskName: toDoList[index][0],
+          taskName: toDoList[index][0],
            taskCompleted: toDoList[index][1], 
            onChanged:(value) => checkBoxChanged(value,index),
+            deleteFunction: (context) => deleteTask(index),
            );
          },
        
